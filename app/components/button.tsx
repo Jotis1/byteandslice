@@ -17,7 +17,7 @@ export function Button({ variant, icon, children, onClick }: Props) {
                 variant === 'primary'
                     ? 'bg-violet-400 text-zinc-900 hover:bg-violet-500'
                     : 'bg-zinc-800 text-zinc-50 hover:bg-zinc-900',
-                icon ? 'w-10 px-0' : 'w-full px-5',
+                icon ? 'w-10 px-0' : 'w-fit px-5',
             )}
         >
             {children}

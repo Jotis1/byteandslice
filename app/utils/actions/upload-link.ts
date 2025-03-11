@@ -1,6 +1,5 @@
 'use server';
 
-import { z } from 'zod';
 import { supabase } from '../supabase/client';
 
 function generateRandomString() {
@@ -9,8 +8,6 @@ function generateRandomString() {
 
 export async function uploadLink(originalUrl: string) {
     // check if the original link is valid and is not in use
-    z.string().url().parse(originalUrl);
-
     const { data: urlData, error: urlError } = await supabase
         .from('urls')
         .select('short_code')
@@ -26,6 +23,7 @@ export async function uploadLink(originalUrl: string) {
 
     // generate a random character string
     const randomString = generateRandomString();
+
     // check if the random string is already in use
     const { data, error } = await supabase
         .from('urls')

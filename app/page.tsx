@@ -3,27 +3,43 @@
 import { Button } from './components/button';
 
 
-import { MoveDown, MoveUp, QrCode, Link, Download } from 'lucide-react';
+import { MoveDown, MoveUp, Link, Download } from 'lucide-react';
 import { Input } from './components/input';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { QRCode } from './components/qr';
 import { uploadLink } from './utils/actions/upload-link';
+import { z } from 'zod';
 
 export default function Home() {
 
     const [outputLink, setOutputLink] = useState('');
+    const [error, setError] = useState('');
 
     const handleGenerateLink = async () => {
-        const input = document.getElementById('input') as HTMLInputElement;
-        const value = input.value;
-        if (!value) return;
-        const res = await uploadLink(value);
-        setOutputLink(`https://link.jotis.me/${res}`);
+        try {
+            const input = document.getElementById('input') as HTMLInputElement;
+            const value = input.value;
+            if (!value) return;
+            z.string().url().parse(value);
+            const res = await uploadLink(value);
+            setOutputLink(`https://link.jotis.me/${res}`);
+        } catch (error) {
+            console.log(error);
+            if (error instanceof z.ZodError) {
+                setError('Invalid URL');
+                return;
+            }
+            setError('An unexpected error occurred');
+        }
     };
 
-    const handleGenerateQR = () => {
-        setOutputLink(mock.output);
-    };
+    useEffect(() => {
+        if (error) {
+            setTimeout(() => {
+                setError('');
+            }, 3000);
+        }
+    }, [error]);
 
     return (
         <Fragment>
@@ -69,13 +85,17 @@ export default function Home() {
                         Generate link
                         <Link className="size-4" />
                     </Button>
-                    <Button
-                        onClick={handleGenerateQR}
-                        variant="secondary">
-                        Generate QR
-                        <QrCode className="size-4" />
-                    </Button>
                 </section>
+                {error && (
+                    <span className='absolute bottom-5 right-5 py-2.5 px-5 rounded-2xl bg-zinc-800 text-sm'>
+                        <p>
+                            Oh no, something went wrong!
+                        </p>
+                        <p className="text-red-400">
+                            {error}
+                        </p>
+                    </span>
+                )}
             </main>
             <aside className="flex flex-col gap-5 items-center">
                 <figure
@@ -87,6 +107,6 @@ export default function Home() {
                     <Download className="size-4" />
                 </Button>
             </aside>
-        </Fragment>
+        </Fragment >
     );
 }
