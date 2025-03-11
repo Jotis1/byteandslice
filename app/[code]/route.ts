@@ -16,7 +16,7 @@ function uploadStats(req: NextRequest, originalUrl: string) {
         }]);
 }
 
-export async function GET(req: NextRequest, { params }: { params: { code: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {
     const { code } = await params;
 
     const { data, error } = await supabase
