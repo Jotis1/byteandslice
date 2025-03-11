@@ -3,7 +3,10 @@ import { supabase } from '@/app/utils/supabase/client';
 
 function uploadStats(req: NextRequest, originalUrl: string) {
     const userAgent = req.headers.get('user-agent');
-    const ip = req.headers.get('x-real-ip') || req.headers.get('x-forwarded-for') || '';
+    const ip = req.headers.get('cf-connecting-ip') ||
+        req.headers.get('x-real-ip') ||
+        req.headers.get('x-forwarded-for') ||
+        '';
     const now = new Date();
 
     return supabase
