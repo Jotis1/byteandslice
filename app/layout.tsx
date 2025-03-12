@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { cn } from './utils/cn';
@@ -52,6 +52,11 @@ export const metadata: Metadata = {
         'Jotis',
         'Byte & Slice'
     ]
+};
+
+export const viewport: Viewport = {
+    themeColor: '#a684ff',
+    colorScheme: 'dark'
 };
 
 export default function RootLayout({
