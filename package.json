@@ -1,7 +1,13 @@
 {
   "name": "byteandslice-next",
-  "version": "0.1.0",
+  "description": "Shorten your URLs with Byte & Slice - free, unlimited, and open-source. GPL-3.0-only.",
+  "version": "1.0.0",
   "private": true,
+  "license": "GPL-3.0-only",
+  "author": {
+    "name": "Jotis",
+    "url": "https://jotis.me"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
