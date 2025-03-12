@@ -20,19 +20,23 @@ function uploadStats(req: NextRequest, originalUrl: string) {
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {
-    const { code } = await params;
+    try {
+        const { code } = await params;
 
-    const { data, error } = await supabase
-        .from('urls')
-        .select('id, original_url')
-        .eq('short_code', code)
-        .single();
+        const { data, error } = await supabase
+            .from('urls')
+            .select('id, original_url')
+            .eq('short_code', code)
+            .single();
 
-    if (error || !data) {
+        if (error || !data) {
+            return NextResponse.redirect(new URL('/', req.nextUrl).toString());
+        }
+
+        await uploadStats(req, data.id);
+
+        return NextResponse.redirect(data.original_url);
+    } catch {
         return NextResponse.redirect(new URL('/', req.nextUrl).toString());
     }
-
-    await uploadStats(req, data.id);
-
-    return NextResponse.redirect(data.original_url);
 }
