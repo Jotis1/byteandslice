@@ -5,6 +5,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
+  * {
+    @apply selection:bg-violet-300 selection:text-violet-900
+  }
+}
+
 body {
   font-family: 'Geist', Helvetica, sans-serif;
 }
