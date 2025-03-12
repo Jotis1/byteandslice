@@ -13,7 +13,7 @@ export function Input({ id, placeholder, readonly, value }: Props) {
             id={id}
             type="url"
             className={cn(
-                'w-full h-10 px-5 rounded-2xl',
+                'w-full h-9 px-5 rounded-2xl',
                 'bg-zinc-800 placeholder:text-zinc-400 focus:outline-none',
             )}
             placeholder={placeholder}

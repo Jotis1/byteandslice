@@ -43,12 +43,12 @@ export default function Home() {
 
     return (
         <Fragment>
-            <main className="flex flex-col max-w-md w-full gap-5">
-                <h1 className="text-6xl font-black w-full uppercase">
+            <main className="flex flex-col lg:items-start items-center max-w-md w-full gap-5 lg:py-0 py-10 px-10">
+                <h1 className="lg:text-start text-center md:text-6xl text-5xl font-black uppercase">
                     <span className="text-violet-400 block"> Byte </span>
                     &Slice
                 </h1>
-                <section className="flex flex-col gap-5">
+                <section className="flex flex-col gap-5 w-full">
                     <div className="flex flex-col gap-2.5">
                         <label
                             htmlFor="input"
@@ -78,7 +78,7 @@ export default function Home() {
                         />
                     </div>
                 </section>
-                <section className="flex gap-5 mt-3.5">
+                <section className="flex gap-5 mt-3.5 w-full">
                     <Button
                         onClick={handleGenerateLink}
                         variant="primary">
@@ -97,7 +97,7 @@ export default function Home() {
                     </span>
                 )}
             </main>
-            <aside className="flex flex-col gap-5 items-center">
+            <aside className="flex flex-col gap-5 items-center ">
                 <figure
                     className="size-80 bg-zinc-800/30 rounded-2xl flex items-center justify-center"
                 >

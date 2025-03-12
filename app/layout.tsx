@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { cn } from './utils/cn';
 
-import { ToastContainer } from 'react-toastify';
-
 const geistSans = Geist({
     variable: '--font-geist-sans',
     subsets: ['latin'],
@@ -31,12 +29,11 @@ export default function RootLayout({
                 className={cn([
                     `${geistSans.variable} ${geistMono.variable} antialiased text-zinc-50 font-normal`,
                     'bg-zinc-950',
-                    'flex items-center justify-center gap-20 h-screen font-sans',
-                    'bg-radial-[100%_100%_at_100%_0%] from-violet-950 to-zinc-950 to-75%'
+                    'flex lg:flex-row flex-col items-center justify-center lg:gap-20 gap-5 lg:h-screen w-screen font-sans text-sm',
+                    'bg-radial-[100%_100%_at_100%_0%] from-violet-950 to-zinc-950 to-75% bg-no-repeat'
                 ])}
             >
                 {children}
-                <ToastContainer />
             </body>
         </html >
     );
