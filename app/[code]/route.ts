@@ -3,6 +3,7 @@ import { supabase } from '@/app/utils/supabase/client';
 
 function uploadStats(req: NextRequest, originalUrl: number) {
     const userAgent = req.headers.get('user-agent');
+    const referer = req.headers.get('referer');
     const ip = req.headers.get('cf-connecting-ip') ||
         req.headers.get('x-real-ip') ||
         req.headers.get('x-forwarded-for') ||
@@ -11,12 +12,13 @@ function uploadStats(req: NextRequest, originalUrl: number) {
 
     return supabase
         .from('stats')
-        .insert({
-            original_url: originalUrl,
+        .insert([{
+            url: originalUrl,
             user_agent: userAgent,
+            referer: referer,
             ip_address: ip,
             created_at: now.toISOString(),
-        });
+        }]);
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {

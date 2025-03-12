@@ -10,6 +10,7 @@ create table if not exists public.stats (
     url bigint references public.urls(id),
     ip_address inet not null,
     user_agent text,
+    referer text,
     created_at timestamp with time zone default now()
 );
 
