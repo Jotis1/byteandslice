@@ -37,8 +37,8 @@ export default function Home() {
                 setError('Invalid URL');
                 return;
             }
-            if (error instanceof Error) {
-                setError(error.message);
+            if (error instanceof Error && error.message === 'Local links are not allowed.') {
+                setError('Local links are not allowed.');
                 return;
             }
             setError('An unexpected error occurred');
