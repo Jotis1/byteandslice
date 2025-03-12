@@ -3,7 +3,7 @@
 import { Button } from './components/button';
 
 
-import { MoveDown, MoveUp, Link, Download } from 'lucide-react';
+import { MoveDown, MoveUp, Link, Download, Loader } from 'lucide-react';
 import { Input } from './components/input';
 import { Fragment, useEffect, useState } from 'react';
 import { QRCode } from './components/qr';
@@ -14,9 +14,11 @@ export default function Home() {
 
     const [outputLink, setOutputLink] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleGenerateLink = async () => {
         try {
+            setLoading(true);
             const input = document.getElementById('input') as HTMLInputElement;
             const value = input.value;
             if (!value) return;
@@ -30,6 +32,8 @@ export default function Home() {
                 return;
             }
             setError('An unexpected error occurred');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -82,8 +86,14 @@ export default function Home() {
                     <Button
                         onClick={handleGenerateLink}
                         variant="primary">
-                        Generate link
-                        <Link className="size-4" />
+                        {loading ? (
+                            <Loader className="size-4 animate-spin" />
+                        ) : (
+                            <Fragment>
+                                Generate link
+                                <Link className="size-4" />
+                            </Fragment>
+                        )}
                     </Button>
                 </section>
                 {error && (
@@ -103,9 +113,11 @@ export default function Home() {
                 >
                     <QRCode value={outputLink} />
                 </figure>
-                <Button variant="secondary" icon>
-                    <Download className="size-4" />
-                </Button>
+                {outputLink && (
+                    <Button variant="secondary" icon>
+                        <Download className="size-4" />
+                    </Button>
+                )}
             </aside>
         </Fragment >
     );
