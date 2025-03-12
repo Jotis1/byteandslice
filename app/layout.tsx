@@ -68,9 +68,10 @@ export default function RootLayout({
         <html lang="en">
             <body
                 className={cn([
-                    `${geistSans.variable} ${geistMono.variable} antialiased text-zinc-50 font-normal`,
+                    `${geistSans.variable} ${geistMono.variable} 
+                    antialiased text-zinc-50 font-sans text-sm font-normal`,
                     'bg-zinc-950',
-                    'flex lg:flex-row flex-col items-center justify-center lg:gap-20 gap-5 lg:h-screen w-screen font-sans text-sm',
+                    'flex lg:flex-row flex-col items-center justify-center lg:gap-20 gap-5 lg:h-screen w-screen',
                     'bg-radial-[100%_100%_at_100%_0%] from-violet-950 to-zinc-950 to-75% bg-no-repeat'
                 ])}
             >

@@ -7,195 +7,195 @@ export type Json =
   | Json[]
 
 export type Database = {
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          operationName?: string
-          query?: string
-          variables?: Json
-          extensions?: Json
+    graphql_public: {
+        Tables: {
+            [_ in never]: never
         }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-  public: {
-    Tables: {
-      stats: {
-        Row: {
-          created_at: string | null
-          id: number
-          ip_address: unknown
-          url: number | null
-          user_agent: string | null
+        Views: {
+            [_ in never]: never
         }
-        Insert: {
-          created_at?: string | null
-          id?: never
-          ip_address: unknown
-          url?: number | null
-          user_agent?: string | null
+        Functions: {
+            graphql: {
+                Args: {
+                    operationName?: string
+                    query?: string
+                    variables?: Json
+                    extensions?: Json
+                }
+                Returns: Json
+            }
         }
-        Update: {
-          created_at?: string | null
-          id?: never
-          ip_address?: unknown
-          url?: number | null
-          user_agent?: string | null
+        Enums: {
+            [_ in never]: never
         }
-        Relationships: [
-          {
-            foreignKeyName: 'stats_url_fkey'
-            columns: ['url']
-            isOneToOne: false
-            referencedRelation: 'urls'
-            referencedColumns: ['id']
-          },
-        ]
-      }
-      urls: {
-        Row: {
-          created_at: string | null
-          id: number
-          original_url: string
-          short_code: string
+        CompositeTypes: {
+            [_ in never]: never
         }
-        Insert: {
-          created_at?: string | null
-          id?: never
-          original_url: string
-          short_code: string
+    }
+    public: {
+        Tables: {
+            stats: {
+                Row: {
+                    created_at: string | null
+                    id: number
+                    ip_address: unknown
+                    url: number | null
+                    user_agent: string | null
+                }
+                Insert: {
+                    created_at?: string | null
+                    id?: never
+                    ip_address: unknown
+                    url?: number | null
+                    user_agent?: string | null
+                }
+                Update: {
+                    created_at?: string | null
+                    id?: never
+                    ip_address?: unknown
+                    url?: number | null
+                    user_agent?: string | null
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: 'stats_url_fkey'
+                        columns: ['url']
+                        isOneToOne: false
+                        referencedRelation: 'urls'
+                        referencedColumns: ['id']
+                    },
+                ]
+            }
+            urls: {
+                Row: {
+                    created_at: string | null
+                    id: number
+                    original_url: string
+                    short_code: string
+                }
+                Insert: {
+                    created_at?: string | null
+                    id?: never
+                    original_url: string
+                    short_code: string
+                }
+                Update: {
+                    created_at?: string | null
+                    id?: never
+                    original_url?: string
+                    short_code?: string
+                }
+                Relationships: []
+            }
         }
-        Update: {
-          created_at?: string | null
-          id?: never
-          original_url?: string
-          short_code?: string
+        Views: {
+            [_ in never]: never
         }
-        Relationships: []
-      }
+        Functions: {
+            [_ in never]: never
+        }
+        Enums: {
+            [_ in never]: never
+        }
+        CompositeTypes: {
+            [_ in never]: never
+        }
     }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      [_ in never]: never
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
 }
 
 type PublicSchema = Database[Extract<keyof Database, 'public'>]
 
 export type Tables<
-  PublicTableNameOrOptions extends
+    PublicTableNameOrOptions extends
     | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+    TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+        ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
         Database[PublicTableNameOrOptions['schema']]['Views'])
-    : never = never,
+        : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+    ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
       Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
-        PublicSchema['Views'])
-    ? (PublicSchema['Tables'] &
-        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
         Row: infer R
-      }
-      ? R
-      : never
-    : never
+    }
+        ? R
+        : never
+    : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
+        PublicSchema['Views'])
+        ? (PublicSchema['Tables'] &
+        PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+            Row: infer R
+        }
+            ? R
+            : never
+        : never
 
 export type TablesInsert<
-  PublicTableNameOrOptions extends
+    PublicTableNameOrOptions extends
     | keyof PublicSchema['Tables']
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never,
+    TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+        ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+        : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+    ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
         Insert: infer I
-      }
-      ? I
-      : never
-    : never
+    }
+        ? I
+        : never
+    : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+        ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+            Insert: infer I
+        }
+            ? I
+            : never
+        : never
 
 export type TablesUpdate<
-  PublicTableNameOrOptions extends
+    PublicTableNameOrOptions extends
     | keyof PublicSchema['Tables']
     | { schema: keyof Database },
-  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
-    : never = never,
+    TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+        ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+        : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
-    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+    ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
         Update: infer U
-      }
-      ? U
-      : never
-    : never
+    }
+        ? U
+        : never
+    : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+        ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+            Update: infer U
+        }
+            ? U
+            : never
+        : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends
+    PublicEnumNameOrOptions extends
     | keyof PublicSchema['Enums']
     | { schema: keyof Database },
-  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
-    : never = never,
+    EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+        ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+        : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
-    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
-    : never
+    ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+    : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+        ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+        : never
 
 export type CompositeTypes<
-  PublicCompositeTypeNameOrOptions extends
+    PublicCompositeTypeNameOrOptions extends
     | keyof PublicSchema['CompositeTypes']
     | { schema: keyof Database },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
-  }
-    ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
-    : never = never,
+    CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+        schema: keyof Database
+    }
+        ? keyof Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+        : never = never,
 > = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
-    ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
-    : never
+    ? Database[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+    : PublicCompositeTypeNameOrOptions extends keyof PublicSchema['CompositeTypes']
+        ? PublicSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+        : never
