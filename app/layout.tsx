@@ -13,35 +13,31 @@ const geistMono = Geist_Mono({
     subsets: ['latin'],
 });
 
-const title = 'Byte & Slice';
-const description = 'URL shortener, free forever and unlimited, also open-source.';
-const url = 'https://link.jotis.me';
-
 export const metadata: Metadata = {
-    title,
-    description,
+    title: 'Byte & Slice',
+    description: 'Free and unlimited URL shortener, also open-source.',
     authors: [{ name: 'Jotis', url: 'https://jotis.me' }],
     openGraph: {
-        title,
-        description,
-        url,
+        title: 'Byte & Slice - Free URL Shortener',
+        description: 'Experience a free, unlimited, and open-source URL shortening service with Byte & Slice.',
+        url: 'https://link.jotis.me',
         type: 'website',
-        siteName: title,
+        siteName: 'Byte & Slice',
         images: [
             {
                 url: 'https://link.jotis.me/og-image.png',
                 width: 1440,
                 height: 1024,
-                alt: 'Byte & Slice',
+                alt: 'Byte & Slice Logo',
             },
-        ]
+        ],
     },
     twitter: {
         card: 'summary_large_image',
-        title,
-        description,
-        images: ['https://link.jotis.me/og-image.png']
-    }
+        title: 'Byte & Slice - Free URL Shortener',
+        description: 'Shorten your URLs with Byte & Slice - free, unlimited, and open-source.',
+        images: ['https://link.jotis.me/og-image.png'],
+    },
 };
 
 export default function RootLayout({
