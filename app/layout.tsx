@@ -38,6 +38,20 @@ export const metadata: Metadata = {
         description: 'Shorten your URLs with Byte & Slice - free, unlimited, and open-source.',
         images: ['https://link.jotis.me/og-image.png'],
     },
+    keywords: [
+        'URL shortener',
+        'free URL shortening',
+        'unlimited link shortening',
+        'open-source URL shortener',
+        'custom URL management',
+        'online link shortener',
+        'shorten URLs for social media',
+        'link analytics',
+        'custom link redirection',
+        'SEO-friendly URLs',
+        'Jotis',
+        'Byte & Slice'
+    ]
 };
 
 export default function RootLayout({
