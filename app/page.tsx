@@ -3,7 +3,7 @@
 import { Button } from './components/button';
 
 
-import { MoveDown, MoveUp, Link, Download, Loader, Copy, Check } from 'lucide-react';
+import { MoveDown, MoveUp, Link, Download, Loader, Copy, Check, QrCode } from 'lucide-react';
 import { Input } from './components/input';
 import { QRCode } from './components/qr';
 import { Fragment, useEffect, useState } from 'react';
@@ -152,9 +152,18 @@ export default function Home() {
             </main>
             <aside className="flex flex-col gap-5 items-center ">
                 <figure
-                    className="size-80 bg-zinc-800/30 rounded-2xl flex items-center justify-center"
+                    className="size-80 bg-zinc-800/30 rounded-2xl flex flex-col items-center justify-center"
                 >
-                    <QRCode value={outputLink} />
+                    {outputLink ? (
+                        <QRCode value={outputLink} />
+                    ) : (
+                        <Fragment>
+                            <QrCode className='size-10 text-zinc-400' />
+                            <span className="text-zinc-400 text-sm w-full text-center p-5 text-balance">
+                                Start by generating a link to see the QR code
+                            </span>
+                        </Fragment>
+                    )}
                 </figure>
                 {outputLink && (
                     <Button variant="secondary" icon onClick={handleDownloadQR}>
