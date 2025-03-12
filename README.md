@@ -1,11 +1,11 @@
 Welcome to Byte & Slice, a simple URL shortener built with Next.js and Supabase. You can use this project, contribute to it, or even host it on your own server. Created by [Jotis](https://jotis.me).
 # Running the project
 ### Requirements
-- Bun (or any other package manager)
+- [Bun](https://bun.sh) (or any other package manager)
 > [!NOTE]
 > You can also migrate the project to the package manager of your choice.
-- Node.js
-- A Supabase account
+- [Node.js](https://nodejs.org)
+- A [Supabase](https://supabase.com) account
 
 ### Steps
 1. Clone this repository
