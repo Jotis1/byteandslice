@@ -29,7 +29,7 @@ bun dev
 - `NEXT_PUBLIC_LOCAL_URL`: The URL of the local server (in development should be `http://localhost:3000`) and in production should be the URL of the production server (e.g. `https://link.jotis.me`).
 
 ### Customization
-- You can fully customize the project and don't forget to update the metadata locate in[ `app/layout.tsx`](./app/layout.tsx).
+- You can fully customize the project and don't forget to update the metadata locate in [`app/layout.tsx`](./app/layout.tsx).
 
 ### License
 This project is licensed under the GNU General Public License v3.0. You can read the full license [here](./LICENSE).
