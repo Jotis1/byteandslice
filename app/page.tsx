@@ -99,7 +99,7 @@ export default function Home() {
                             className="flex items-center gap-1.5 text-zinc-50"
                         >
                             <MoveUp className="text-emerald-400 size-4" />
-                            Copy the output
+                            Copy the shortened link
                         </label>
                         <section className='flex items-center w-full gap-2.5'>
                             <Input
