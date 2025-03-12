@@ -7,6 +7,13 @@ function generateRandomString() {
 }
 
 export async function uploadLink(originalUrl: string) {
+    const LOCAL_URL = process.env.NEXT_PUBLIC_LOCAL_URL || 'http://localhost:3000';
+
+    // if the original link is a local link, throw an error
+    if (originalUrl.startsWith(LOCAL_URL)) {
+        throw new Error('Local links are not allowed.');
+    }
+
     // check if the original link is valid and is not in use
     const { data: urlData, error: urlError } = await supabase
         .from('urls')

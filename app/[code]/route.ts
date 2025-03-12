@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/app/utils/supabase/client';
 
-function uploadStats(req: NextRequest, originalUrl: string) {
+function uploadStats(req: NextRequest, originalUrl: number) {
     const userAgent = req.headers.get('user-agent');
     const ip = req.headers.get('cf-connecting-ip') ||
         req.headers.get('x-real-ip') ||
@@ -11,12 +11,12 @@ function uploadStats(req: NextRequest, originalUrl: string) {
 
     return supabase
         .from('stats')
-        .insert([{
-            url: originalUrl,
+        .insert({
+            original_url: originalUrl,
             user_agent: userAgent,
             ip_address: ip,
-            clicked_at: now,
-        }]);
+            created_at: now.toISOString(),
+        });
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {

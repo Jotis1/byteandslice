@@ -25,13 +25,20 @@ export default function Home() {
             const input = document.getElementById('input') as HTMLInputElement;
             const value = input.value;
             if (!value) return;
-            z.string().url().parse(value);
+            z.string().url().transform(url => {
+                const sanitizedUrl = new URL(url);
+                sanitizedUrl.pathname = sanitizedUrl.pathname.replace(/\/+$/, '');
+                url.replace(/\/$/, '');
+            }).parse(value);
             const res = await uploadLink(value);
-            setOutputLink(`https://link.jotis.me/${res}`);
+            setOutputLink(`${process.env.NEXT_PUBLIC_LOCAL_URL}/${res}`);
         } catch (error) {
-            console.log(error);
             if (error instanceof z.ZodError) {
                 setError('Invalid URL');
+                return;
+            }
+            if (error instanceof Error) {
+                setError(error.message);
                 return;
             }
             setError('An unexpected error occurred');
@@ -47,7 +54,7 @@ export default function Home() {
             const link = document.createElement('a');
             const url = await toPng(qr);
             link.href = url;
-            link.download = 'link.jotis.me-qr.png';
+            link.download = 'byte&slice.me-qr.png';
             link.click();
         } catch {
             setError('Download failed');
@@ -106,7 +113,7 @@ export default function Home() {
                                 id="output"
                                 readonly
                                 value={outputLink}
-                                placeholder={'https://link.jotis.me/linkedin'}
+                                placeholder={`${process.env.NEXT_PUBLIC_LOCAL_URL}/linkedin`}
                             />
                             <Button
                                 onClick={() => {
