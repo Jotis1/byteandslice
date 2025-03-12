@@ -13,18 +13,34 @@ const geistMono = Geist_Mono({
     subsets: ['latin'],
 });
 
+const title = 'Byte & Slice';
+const description = 'URL shortener, free forever and unlimited, also open-source.';
+const url = 'https://link.jotis.me';
+
 export const metadata: Metadata = {
-    title: 'Byte & Slice',
-    description: 'URL shortener, free forever and unlimited, also open-source.',
+    title,
+    description,
+    authors: [{ name: 'Jotis', url: 'https://jotis.me' }],
     openGraph: {
+        title,
+        description,
+        url,
+        type: 'website',
+        siteName: title,
         images: [
             {
-                url: './og-image.png',
+                url: 'https://link.jotis.me/og-image.png',
                 width: 1440,
                 height: 1024,
                 alt: 'Byte & Slice',
             },
-        ],
+        ]
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: ['https://link.jotis.me/og-image.png']
     }
 };
 
