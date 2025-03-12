@@ -3,7 +3,7 @@
 import { Button } from './components/button';
 
 
-import { MoveDown, MoveUp, Link, Download, Loader } from 'lucide-react';
+import { MoveDown, MoveUp, Link, Download, Loader, Copy, Check } from 'lucide-react';
 import { Input } from './components/input';
 import { Fragment, useEffect, useState } from 'react';
 import { QRCode } from './components/qr';
@@ -15,6 +15,7 @@ export default function Home() {
     const [outputLink, setOutputLink] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [copied, setCopied] = useState(false);
 
     const handleGenerateLink = async () => {
         try {
@@ -36,6 +37,14 @@ export default function Home() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (copied) {
+            setTimeout(() => {
+                setCopied(false);
+            }, 1000);
+        }
+    }, [copied]);
 
     useEffect(() => {
         if (error) {
@@ -74,12 +83,28 @@ export default function Home() {
                             <MoveUp className="text-emerald-400 size-4" />
                             Copy the output
                         </label>
-                        <Input
-                            id="output"
-                            readonly
-                            value={outputLink}
-                            placeholder={'https://link.jotis.me/linkedin'}
-                        />
+                        <section className='flex items-center w-full gap-2.5'>
+                            <Input
+                                id="output"
+                                readonly
+                                value={outputLink}
+                                placeholder={'https://link.jotis.me/linkedin'}
+                            />
+                            <Button
+                                onClick={() => {
+                                    setCopied(true);
+                                    navigator.clipboard.writeText(outputLink);
+                                }}
+                                variant="secondary"
+                                icon
+                            >
+                                {copied ? (
+                                    <Check className="size-4" />
+                                ) : (
+                                    <Copy className="size-4" />
+                                )}
+                            </Button>
+                        </section>
                     </div>
                 </section>
                 <section className="flex gap-5 mt-3.5 w-full">
