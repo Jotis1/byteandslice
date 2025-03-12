@@ -13,6 +13,7 @@ import { z } from 'zod';
 
 export default function Home() {
 
+    const [spam, setSpam] = useState(0);
     const [outputLink, setOutputLink] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -21,6 +22,11 @@ export default function Home() {
 
     const handleGenerateLink = async () => {
         try {
+            setSpam(spam + 1);
+            if (spam > 5) {
+                setError('Spamming is not allowed, please wait a few seconds');
+                return;
+            }
             setLoading(true);
             const input = document.getElementById('input') as HTMLInputElement;
             const value = input.value;
@@ -79,6 +85,14 @@ export default function Home() {
         }
     }, [error]);
 
+    useEffect(() => {
+        if (spam) {
+            setTimeout(() => {
+                setSpam(0);
+            }, 10000);
+        }
+    }, [spam]);
+
     return (
         <Fragment>
             <main className="flex flex-col lg:items-start items-center max-w-md w-full gap-5 lg:py-0 py-10 px-10">
@@ -123,9 +137,9 @@ export default function Home() {
                                 variant="secondary"
                                 icon
                             >
-                                {copied ? 
+                                {copied ?
                                     <Check className="size-4" />
-                                    : 
+                                    :
                                     <Copy className="size-4" />
                                 }
                             </Button>
@@ -136,9 +150,9 @@ export default function Home() {
                     <Button
                         onClick={handleGenerateLink}
                         variant="primary">
-                        {loading ? 
+                        {loading ?
                             <Loader className="size-4 animate-spin" />
-                            : 
+                            :
                             <Fragment>
                                 Generate link
                                 <Link className="size-4" />
@@ -146,12 +160,12 @@ export default function Home() {
                         }
                     </Button>
                 </section>
-                {error && 
+                {error &&
                     <span className='absolute bottom-5 right-5 py-2.5 px-5 rounded-2xl bg-zinc-800 text-sm'>
                         <p>
                             Oh no, something went wrong!
                         </p>
-                        <p className="text-red-400">
+                        <p className="text-red-400 mt-1">
                             {error}
                         </p>
                     </span>
@@ -161,9 +175,9 @@ export default function Home() {
                 <figure
                     className="size-80 bg-zinc-800/30 rounded-2xl flex flex-col items-center justify-center"
                 >
-                    {outputLink ? 
+                    {outputLink ?
                         <QRCode value={outputLink} />
-                        : 
+                        :
                         <Fragment>
                             <QrCode className='size-10 text-zinc-400' />
                             <span className="text-zinc-400 text-sm w-full text-center p-5 text-balance">
@@ -172,11 +186,11 @@ export default function Home() {
                         </Fragment>
                     }
                 </figure>
-                {outputLink && 
+                {outputLink &&
                     <Button variant="secondary" icon onClick={handleDownloadQR}>
-                        {downloading ? 
+                        {downloading ?
                             <Loader className="size-4 animate-spin" />
-                            : 
+                            :
                             <Download className="size-4" />
                         }
                     </Button>
