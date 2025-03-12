@@ -16,6 +16,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: 'Byte & Slice',
     description: 'URL shortener, free forever and unlimited, also open-source.',
+    openGraph: {
+        images: [
+            {
+                url: './og-image.png',
+                width: 1440,
+                height: 1024,
+                alt: 'Byte & Slice',
+            },
+        ],
+    }
 };
 
 export default function RootLayout({
