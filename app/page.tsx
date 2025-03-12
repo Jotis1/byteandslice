@@ -5,9 +5,10 @@ import { Button } from './components/button';
 
 import { MoveDown, MoveUp, Link, Download, Loader, Copy, Check } from 'lucide-react';
 import { Input } from './components/input';
-import { Fragment, useEffect, useState } from 'react';
 import { QRCode } from './components/qr';
+import { Fragment, useEffect, useState } from 'react';
 import { uploadLink } from './utils/actions/upload-link';
+import { toPng } from 'html-to-image';
 import { z } from 'zod';
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [copied, setCopied] = useState(false);
+    const [downloading, setDownloading] = useState(false);
 
     const handleGenerateLink = async () => {
         try {
@@ -35,6 +37,22 @@ export default function Home() {
             setError('An unexpected error occurred');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleDownloadQR = async () => {
+        try {
+            setDownloading(true);
+            const qr = document.querySelector('figure') as HTMLElement;
+            const link = document.createElement('a');
+            const url = await toPng(qr);
+            link.href = url;
+            link.download = 'link.jotis.me-qr.png';
+            link.click();
+        } catch {
+            setError('Download failed');
+        } finally {
+            setDownloading(false);
         }
     };
 
@@ -139,8 +157,12 @@ export default function Home() {
                     <QRCode value={outputLink} />
                 </figure>
                 {outputLink && (
-                    <Button variant="secondary" icon>
-                        <Download className="size-4" />
+                    <Button variant="secondary" icon onClick={handleDownloadQR}>
+                        {downloading ? (
+                            <Loader className="size-4 animate-spin" />
+                        ) : (
+                            <Download className="size-4" />
+                        )}
                     </Button>
                 )}
             </aside>
