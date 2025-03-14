@@ -1,24 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/app/utils/supabase/client';
 
-function uploadStats(req: NextRequest, originalUrl: number) {
-    const userAgent = req.headers.get('user-agent');
-    const referer = req.headers.get('referer');
-    const ip = req.headers.get('cf-connecting-ip') ||
-        req.headers.get('x-real-ip') ||
-        req.headers.get('x-forwarded-for') ||
-        '';
-    const now = new Date();
-
+function increaseCount(id: number, count: number) {
     return supabase
-        .from('stats')
-        .insert([{
-            url: originalUrl,
-            user_agent: userAgent,
-            referer: referer,
-            ip_address: ip,
-            created_at: now.toISOString(),
-        }]);
+        .from('urls')
+        .update({ clicks: count + 1 })
+        .eq('id', id);
 }
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ code: string }> }) {
@@ -27,7 +14,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ code
 
         const { data, error } = await supabase
             .from('urls')
-            .select('id, original_url')
+            .select('id, original_url, clicks')
             .eq('short_code', code)
             .single();
 
@@ -35,8 +22,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ code
             return NextResponse.redirect(new URL('/', req.nextUrl).toString());
         }
 
-        await uploadStats(req, data.id);
-
+        await increaseCount(data.id, data.clicks);
         return NextResponse.redirect(data.original_url);
     } catch {
         return NextResponse.redirect(new URL('/', req.nextUrl).toString());

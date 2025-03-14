@@ -2,18 +2,9 @@ create table if not exists public.urls (
     id bigint generated always as identity primary key,
     original_url text unique not null,
     short_code text unique not null,
-    created_at timestamp with time zone default now()
+    clicks integer default 0 not null,
+    created_at timestamp with time zone default now() not null
 );
-
-create table if not exists public.stats (
-    id bigint generated always as identity primary key,
-    url bigint references public.urls(id),
-    ip_address inet not null,
-    user_agent text,
-    referer text,
-    created_at timestamp with time zone default now()
-);
-
 -- seed data
 insert into public.urls (original_url, short_code) values 
 ('https://jotis.me', 'porfolio'), 
