@@ -12,8 +12,8 @@ Welcome to **Byte & Slice** – a simple, free, and open-source URL shortener bu
 
 Before you begin, ensure you have the following installed:
 
+> **Note:** You can migrate the project to any package manager of your choice.
 - [Bun](https://bun.sh) (or your preferred package manager)  
-  > **Note:** You can migrate the project to any package manager of your choice.
 - [Node.js](https://nodejs.org)
 - A [Supabase](https://supabase.com) account
 
